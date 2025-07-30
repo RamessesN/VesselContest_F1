@@ -16,7 +16,23 @@
 ## 一、项目简介
 本项目为 “第十四届全国海洋航行器设计与制作大赛 - F1帆船模型竞速” 的软件控制部分，使用 **STM32F103C8T6** 微控制器实现红外数据采集、舵机角度控制与通信调试，完成自动控制路径跟踪功能。
 
-## 二、项目主体结构
+## 二、成果展示
+<p align="center">
+  *** Sailboat ***
+  <br>
+  <img src="">
+  <img src="">
+  <img src="">
+  <br>
+  <br>
+  *** Board ***
+  <br>
+  <img src="./Doc/img/board_front.png" alt="board_front_alt" title="bf_img" width=300>
+  <img src="./Doc/img/board_back.png" alt="board_back_alt" title="bb_img" width=300>
+  <br>
+</p>
+
+## 三、项目主体结构
 <pre><code>
 User/
 ├── GPIO/                   # GPIO初始化，包含红外、PWM引脚配置
@@ -42,7 +58,7 @@ User/
 └── stm32f10x_it.h          # 中断服务函数声明
 </code></pre>
 
-## 三、系统功能
+## 四、具体说明
 ### 1. 功能概述
 | 模块     | 功能描述 |
 |----------|----------|
@@ -57,12 +73,12 @@ User/
 |-------------|-----------|--------------------------|
 | PWM输出1    | PA8       | TIM1_CH1 控制主舵机角度 |
 | PWM输出2    | PA7       | TIM3_CH2 预留控制第二通道 |
-| USART1 TX   | PA9       | 串口发送（连接蓝牙模块） |
-| USART1 RX   | PA10      | 串口接收                 |
+| USART1 - TX   | PA9       | 串口发送（连接蓝牙模块） |
+| USART1 - RX   | PA10      | 串口接收                 |
 | 红外接收    | PB3\~PB5、PB10\~PB15、PC6\~PC7、PC10\~PC12、PD2、PA15 | 共15路红外输入信号 |
-> 注：通过关闭 JTAG 释放 PB3~PB5 端口用于红外输入。
+> 注：通过关闭 JTAG 释放 PB3~PB5 端口用于红外输入
 
-### 3. 控制核心算法
+### 3. 核心控制算法
 - **红外采样逻辑**：采用边沿检测替代电平累加，将高速信号采集与低速控制决策分离，保证红外脉冲计数的准确性和系统控制的稳定性
 - **定时处理**：TIM3中断每67ms触发一次，完成以下任务：
   1. 分类红外区域（左/中/右）信号强度
@@ -71,13 +87,13 @@ User/
   4. 输出 PWM 控制信号至舵机（角度范围 900 ~ 2100）
 - **调试信息**：当开启 `bluetoothsend = 1` 时，通过串口输出传感器数据、角度值、PWM控制量等调试信息。
 
-### 4. PWM控制公式
+### 4. PWM 占空比角度转化 PD 算法
 ```c {.line-numbers}
 angle_pwm = 1500 + (int)((angle - 8) * 200) + (angle - anglelast) * 40;
 ```
 > 注：angle_pwm 限制在 [900, 2100] 范围内
 
-### 5. 使用方法 (兼容 win / macOS)
+### 5. 烧录方法 (兼容 win / macOS)
 > 注：由于 Coder 是一名 mac 重度使用者🧑🏻‍💻，这里以少为人知的 mac 使用方法作为讲解
 1.	通过 Terminal 执行 `brew install stlink` 下载烧录工具，用于与ST-Link V2和电脑之间通信
 2. 通过 `st-info --probe` 查看电脑是否识别到 STM 芯片，如果识别到，大致格式如下：
@@ -99,9 +115,11 @@ Found 1 stlink programmers
 ### 6. 关键参数说明
 | 参数 | 默认值 | 说明 |
 |-------------|-----------|--------------------------|
-| TIM3周期 | 674 | 对应约 67ms 中断周期 |
+| TIM3 周期 | 674 | 对应约 67ms 中断周期 |
 | PWM 主舵机通道 | TIM1_CH1 / PA8 | 控制主向偏转角 |
 | 中心角度基准 | 1500 | 舵机中位值 |
-| 红外采样窗口 | 15通道 | 从IRM1 ~ IRM15并行处理 |
+| 红外采样窗口 | 15通道 | 从 IRM1 ~ IRM15 并行处理 |
 
 ### ⚠️ License: 该项目非开源. 详见 [LICENSE](./LICENSE).
+
+<img src="./Doc/img/ouc2.png" alt="ouc2_alt" title="ouc2_img">
