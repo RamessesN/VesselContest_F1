@@ -3,8 +3,9 @@
     <h2>F1帆船模型竞速 - 现代帆船竞速
 </div>
 
+<img src="./Doc/img/ouc.png" alt="ouc_alt" title="ouc_img">
+
 <div align="center">
-  <h3> 中国海洋大学 
   <h3> 团队名：海洋Rose队
   <h3> 队长：徐子正 队员：赵禹惟、王昊凯、张浩、胡焕峥
   <h3> 指导老师：闫劢、冯晨
