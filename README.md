@@ -3,6 +3,8 @@
     <h2>F1帆船模型竞速 - 现代帆船竞速
 </div>
 
+---
+
 <img src="./Doc/img/ouc.png" alt="ouc_alt" title="ouc_img">
 
 <div align="center">
@@ -39,7 +41,7 @@ User/
 │   ├── GPIO.c
 │   └── GPIO.h
 │
-├── Timer1/                 # TIM1定时中断，每67ms触发一次数据处理与舵机控制
+├── Timer1/                 # TIM3定时中断，每67ms触发一次数据处理与舵机控制
 │   ├── Timer1.c
 │   └── Timer1.h
 │
@@ -110,6 +112,7 @@ Found 1 stlink programmers
 4. 通过 `st-flash write XXX.bin 0x8000000` 将 .bin 文件 (如 [BH-F103.bin](./Project/Objects/BH-F103.bin))
 烧录到对应 STM 芯片中
 > 注1：执行 st-flash 一般需要先执行 `st-flash erase` 用于擦除芯片旧二进制信息
+>
 > 注2：据 st-link 命令行工具官方说明，st-link version 1.8.0 之后将不再提供对 mac 的支持，详见 [stlink-org/stlink](https://github.com/stlink-org/stlink.git)
 
 ### 6. 关键参数说明
