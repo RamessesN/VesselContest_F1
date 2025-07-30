@@ -23,35 +23,35 @@ int irm_midflag_sum = 0;
 int irm_rightflag_sum = 0;
 
 // 定时器初始化
-void TIM1_Init(void) {
+void TIM3_Init(void) {
     TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); // 时钟使能
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);  // 时钟使能
 
     TIM_TimeBaseStructure.TIM_Period = 674; // 设置自动重装载寄存器周期值
     TIM_TimeBaseStructure.TIM_Prescaler =7199; // 设置预分频值
     TIM_TimeBaseStructure.TIM_ClockDivision = 0; // 设置时钟分割
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; // 向上计数模式
     TIM_TimeBaseStructure.TIM_RepetitionCounter = 0; // 重复计数设置
-    TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); // 参数初始化
-    TIM_ClearFlag(TIM1, TIM_FLAG_Update); // 清中断标志位
+    TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); // 参数初始化
+    TIM_ClearFlag(TIM3, TIM_FLAG_Update); // 清中断标志位
 
     TIM_ITConfig(      // 使能或者失能指定的TIM中断
-        TIM1,            // TIM1
+        TIM3,            // TIM3
         TIM_IT_Update  | // TIM 更新中断源
         TIM_IT_Trigger,  // TIM 触发中断源 
         ENABLE  	     // 使能
     );
     
     // 设置优先级
-    NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;  
+    NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 先占优先级0级
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;  	   // 从优先级0级
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure); 
 
-    TIM_Cmd(TIM1, ENABLE);  // 使能TIMx外设
+    TIM_Cmd(TIM3, ENABLE);  // 使能TiM3外设
 }
 
 // 红外区域标志统计
@@ -139,7 +139,7 @@ static void IRM_UpdatePWM(void) {
     if (angle_pwm >= 2100) angle_pwm = 2100;
     else if (angle_pwm <= 900) angle_pwm = 900;
 
-    TIM_SetCompare1(TIM4, angle_pwm);
+    TIM_SetCompare1(TIM1, angle_pwm);
 
 #if bluetoothsend
     printf("%s","\r\nirm_leftflag_sum=");
@@ -165,8 +165,8 @@ static void IRM_ClearData(void) {
     irm_maxtrue_sum = irm_datasum = 0;
 }
 
-void TIM1_UP_IRQHandler(void) {
-    if (TIM_GetITStatus(TIM1,TIM_IT_Update) != RESET) {
+void TIM3_IRQHandler(void) {
+    if (TIM_GetITStatus(TIM3,TIM_IT_Update) != RESET) {
         tim1_counter = (tim1_counter + 1) % 11;
         
         IRM_ProcessFlags();
@@ -186,6 +186,6 @@ void TIM1_UP_IRQHandler(void) {
         IRM_ClearData();
         anglelast = angle;
         
-        TIM_ClearITPendingBit(TIM1, TIM_FLAG_Update);
+        TIM_ClearITPendingBit(TIM3, TIM_FLAG_Update);
     }
 }	

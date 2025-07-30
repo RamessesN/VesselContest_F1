@@ -23,8 +23,8 @@
 // 红外数据数组 [15][2]：第0列存当前值，第1列存上一次值
 extern u32 irm_data[15][2];
 
-void TIM1_Init(void); // 定时器初始化
-void TIM1_UP_IRQHandler(void); // 中断服务函数
+void TIM3_Init(void); // 定时器初始化
+void TIM3_UP_IRQHandler(void); // 中断服务函数
 
 void IRM_UpdateAll(void); // 更新所有红外状态
 void IRM_ProcessSignal(void); // 根据变化做出反应（如PWM控制）
