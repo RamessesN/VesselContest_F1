@@ -3,7 +3,7 @@
 /**
  * @brief 初始化 USART1（PA9 TX, PA10 RX）
  * 
- * 配置波特率 115200，8位数据，无校验，1停止位，无硬件流控
+ * 配置波特率 9600，8位数据，无校验，1停止位，无硬件流控
  */
 void Usart1_Init(void) {
 	GPIO_InitTypeDef gpio_initstruct;
@@ -24,7 +24,7 @@ void Usart1_Init(void) {
 	GPIO_Init(GPIOA, &gpio_initstruct);
 
 	// // USART1 参数配置
-	usart_initstruct.USART_BaudRate = 115200;
+	usart_initstruct.USART_BaudRate = 9600;
 	usart_initstruct.USART_WordLength = USART_WordLength_8b;
 	usart_initstruct.USART_Parity = USART_Parity_No;
 	usart_initstruct.USART_StopBits = USART_StopBits_1;
@@ -92,7 +92,6 @@ int fputc(int ch, FILE *f) {
 	return ch;
 }
 
-
 /**
  * @brief 发送以'\0'结尾的字符串
  * @param pUSARTx USART外设指针
@@ -105,5 +104,4 @@ void Usart_Send_String(USART_TypeDef* pUSARTx, uint8_t* p) {
 		while(USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);
 			i++;
 	} while(*(p + i) != '\0');
-	
 }
