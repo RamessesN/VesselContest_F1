@@ -7,24 +7,30 @@
 本项目为 “第十四届全国海洋航行器设计与制作大赛 - F1帆船模型竞速” 的软件控制部分，使用 **STM32F103C8T6** 微控制器实现红外数据采集、舵机角度控制与通信调试，完成自动控制路径跟踪功能。
 
 ## 二、项目主体结构
- User/  
- ├── main.c // 主函数入口  
- │  
- ├── GPIO // GPIO初始化，包含红外、PWM引脚配置  
- │  ├──  GPIO.h  
- │  └──  GPIO.c  
- │  
- ├── Usart1 // 串口USART1初始化及发送函数  
- │  ├──  usart1.h  
- │  └──  usart1.c  
- │  
- ├── pwm // TIM1、TIM3用于PWM输出控制舵机  
- │  ├──  pwm.h  
- │  └──  pwm.c  
- │  
- ├── Timer1 // TIM1定时中断，每67ms触发一次数据处理与舵机控制  
- │  ├──  Timer1.h  
- │  └──  Timer1.c  
+<pre><code>
+User/
+├── GPIO/                   # GPIO初始化，包含红外、PWM引脚配置
+│   ├── GPIO.c
+│   └── GPIO.h
+│
+├── Timer1/                 # TIM1定时中断，每67ms触发一次数据处理与舵机控制
+│   ├── Timer1.c
+│   └── Timer1.h
+│
+├── Usart1/                 # USART1串口初始化及数据发送函数
+│   ├── usart1.c
+│   └── usart1.h
+│
+├── pwm/                    # PWM输出模块（TIM1与TIM3控制舵机）
+│   ├── pwm.c
+│   └── pwm.h
+│
+├── main.c                  # 主程序入口，包含红外采集与控制主循环
+│
+├── stm32f10x_conf.h        # 标准外设库配置文件
+├── stm32f10x_it.c          # 中断服务函数实现
+└── stm32f10x_it.h          # 中断服务函数声明
+</code></pre>
 
 ## 三、系统功能
 ### 1. 功能概述
