@@ -135,7 +135,7 @@ static void IRM_CalculateAngle(void) {
 
 // ¸üÐÂ PWM Êä³ö
 static void IRM_UpdatePWM(void) {
-    angle_pwm = 1500 + (int)((angle - 8) * 200) + (angle - anglelast) * 40;
+    angle_pwm = 1500 - (int)((angle - 8) * 200) + (angle - anglelast) * 40;
     if (angle_pwm >= 2100) angle_pwm = 2100;
     else if (angle_pwm <= 900) angle_pwm = 900;
 
