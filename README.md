@@ -95,7 +95,7 @@ User/
 
 ### 4. PWM 占空比角度转化 PD 算法
 ```c {.line-numbers}
-angle_pwm = 1500 + (int)((angle - 8) * 200) + (angle - anglelast) * 40;
+angle_pwm = 1500 - (int)((angle - 8) * 200) + (angle - anglelast) * 40;
 ```
 > 注：angle_pwm 限制在 [900, 2100] 范围内
 
