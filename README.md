@@ -20,19 +20,21 @@
 
 ## 二、成果展示
 <p align="center">
-  *** Sailboat ***
+  1. 水上行驶
   <br>
-  <img src="">
-  <img src="">
-  <img src="">
+  <img src="./Doc/video/test_video.gif" width="600" alt="演示动画">
+  <br> <br>
+  2. EDA 布局图
   <br>
+  <img src="./Doc/img/EDA 布线图.PNG" alt="eda_alt" title="eda_img" width=600>
+  <br> <br>
+  3. 电路板
   <br>
-  *** Board ***
-  <br>
-  <img src="./Doc/img/board_front.png" alt="board_front_alt" title="bf_img" width=300>
-  <img src="./Doc/img/board_back.png" alt="board_back_alt" title="bb_img" width=300>
-  <br>
+  <img src="./Doc/img/board_front.jpg" alt="board_front_alt" title="bf_img" width=300>
+  <img src="./Doc/img/board_back.jpg" alt="board_back_alt" title="bb_img" width=300>
 </p>
+
+> 注：原视频见 [**演示视频**](./Doc/video/test_video.mp4)
 
 ---
 
@@ -137,8 +139,8 @@ Found 1 stlink programmers
 | 中心角度基准 | 1500 | 舵机中位值 |
 | 红外采样窗口 | 15通道 | 从 IRM1 ~ IRM15 并行处理 |
 
----
+#### ⚠️ License: 该项目非开源. 详见 [LICENSE](./LICENSE).
 
-### ⚠️ License: 该项目非开源. 详见 [LICENSE](./LICENSE).
+---
 
 <img src="./Doc/img/ouc2.png" alt="ouc2_alt" title="ouc2_img">
