@@ -1,8 +1,6 @@
 #include "timer1.h"
 #include <stdio.h>
 
-#define bluetoothsend 1 // 是否允许向蓝牙或串口发送信息，0表示不发送，1表示发送
-
 extern int irm_flag[15];
 
 float angle = 8 ,anglelast=8;
@@ -87,50 +85,10 @@ static void IRM_CalculateAngle(void) {
     for (i = 0; i < sumMax; ++i)
         irm_datasum += irm_maxtrue[i][0] * irm_maxtrue[i][1];
 
-    if (irm_maxtrue_sum < 50)
+    if (irm_maxtrue_sum < 2) // 唯一可调参数
         angle = 8;
     else
         angle = (float)irm_datasum / irm_maxtrue_sum;
-    
-#if bluetoothsend		
-    printf("%s","\r\ndatasum=");
-    printf("%d",irm_datasum);
-    printf("%s","\r\nirm_maxtrue_sum=");
-    printf("%d",irm_maxtrue_sum);
-    printf("%s","\r\nangle=");
-    printf("%.2f",angle);
-    printf("%s","\r\ndata0=");
-    printf("%d",irm_data[0][0]);
-    printf("%s","\r\ndata1=");
-    printf("%d",irm_data[1][0]);
-    printf("%s","\r\ndata2=");
-    printf("%d",irm_data[2][0]);
-    printf("%s","\r\ndata3=");
-    printf("%d",irm_data[3][0]);
-    printf("%s","\r\ndata4=");
-    printf("%d",irm_data[4][0]);	
-    printf("%s","\r\ndata5=");
-    printf("%d",irm_data[5][0]);	
-    printf("%s","\r\ndata6=");
-    printf("%d",irm_data[6][0]);	
-    printf("%s","\r\ndata7=");
-    printf("%d",irm_data[7][0]);	
-    printf("%s","\r\ndata8=");
-    printf("%d",irm_data[8][0]);	
-    printf("%s","\r\ndata9=");
-    printf("%d",irm_data[9][0]);	
-    printf("%s","\r\ndata10=");
-    printf("%d",irm_data[10][0]);			
-    printf("%s","\r\ndata11=");
-    printf("%d",irm_data[11][0]);
-    printf("%s","\r\ndata12=");
-    printf("%d",irm_data[12][0]);
-    printf("%s","\r\ndata13=");
-    printf("%d",irm_data[13][0]);	
-    printf("%s","\r\ndata14=");
-    printf("%d",irm_data[14][0]);					
-    printf("%s","\r\n\r\n");
-#endif
 }
 
 // 更新 PWM 输出
@@ -140,16 +98,6 @@ static void IRM_UpdatePWM(void) {
     else if (angle_pwm <= 900) angle_pwm = 900;
 
     TIM_SetCompare1(TIM1, angle_pwm);
-
-#if bluetoothsend
-    printf("%s","\r\nirm_leftflag_sum=");
-    printf("%d",irm_leftflag_sum);
-    printf("%s","\r\nirm_midflag_sum=");
-    printf("%d",irm_midflag_sum);
-    printf("%s","\r\nirm_rightflag_sum=");
-    printf("%d",irm_rightflag_sum);
-    printf("\r\nangle_pwm = %d", angle_pwm);
-#endif
 }
 
 // 清除数据准备下一周期
